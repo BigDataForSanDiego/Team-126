@@ -12,7 +12,7 @@
 ##### `An AI chatbot deployed at public kiosks to provide mental health support for unsheltered individuals while collecting anonymized data on their most pressing challenges to inform policy and resource allocation.`
 
 #### A visual
-![bigdatahackathon4sd](https://github.com/BigDataForSanDiego/bigdataforsandiego.github.io/blob/main/images/big_data_2025_clip.png?raw=true "Big Data Hackathon for San Diego 2025")
+<img width="857" height="436" alt="Screenshot 2025-11-08 at 4 33 09 PM" src="https://github.com/user-attachments/assets/a42f52c0-0f7e-4609-8ddc-6eac2ade5191" />
 
 <img height="10%" width="50%" alt="HDMA" src="https://github.com/BigDataForSanDiego/bigdataforsandiego.github.io/blob/main/templates/img/hdma2.png?raw=true"> 
 
