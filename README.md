@@ -12,8 +12,7 @@
 ##### `An AI chatbot deployed at public kiosks to provide mental health support for unsheltered individuals while collecting anonymized data on their most pressing challenges to inform policy and resource allocation.`
 
 #### A visual
-<img width="857" height="436" alt="Screenshot 2025-11-08 at 4 46 39 PM" src="https://github.com/user-attachments/assets/bc626260-047b-4c40-ab20-baf523292fc6" />
-
+<img width="857" height="436" alt="Screenshot 2025-11-08 at 4 49 54 PM" src="https://github.com/user-attachments/assets/e589926e-c161-4907-af72-70a7b0219df5" />
 
 
 #### Hackathon Five CORE Themes. `CHECK ONE or TWO QUESTIONS (insert X in [ ])`.
