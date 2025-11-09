@@ -12,5 +12,6 @@
 >   - A visual that shows what your idea is (can be a sketch, photo, wireframe, etc.)
 > - Make sure to think about the Hackathon theme, how this will help the user experience, how data will be incorporated and what problem it aims to solve. 
 
-<img width="857" height="436" alt="Screenshot 2025-11-08 at 4 32 10 PM" src="https://github.com/user-attachments/assets/3e17276e-ab86-4647-a72d-7c14122b5c17" />
+
+<img width="857" height="436" alt="Screenshot 2025-11-08 at 4 33 09 PM" src="https://github.com/user-attachments/assets/f804d378-ea52-4271-9c28-226e38695c48" />
 
