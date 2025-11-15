@@ -107,9 +107,15 @@ function Chat() {
 
           // Check if the response is a JSON string with location request
           let content = data.content
+          console.log('[WS] Received content:', content)
+
           try {
             const parsedContent = JSON.parse(content)
+            console.log('[WS] Parsed JSON:', parsedContent)
+
             if (parsedContent.type === 'request_location') {
+              console.log('[WS] Location request detected!')
+
               // Display the message asking for permission
               const requestMessage: Message = {
                 role: 'assistant',
@@ -119,10 +125,13 @@ function Chat() {
               setMessages(prev => [...prev, requestMessage])
 
               // Automatically get location
+              console.log('[Location] Requesting location from browser...')
               const location = await getCurrentLocation()
+              console.log('[Location] Result:', location)
 
               if (location.error) {
                 // Send error message
+                console.error('[Location] Error:', location.error)
                 const errorMsg = `I'm unable to access your location: ${location.error}. You can manually tell me your city or address instead.`
                 const errorMessage: Message = {
                   role: 'user',
@@ -133,6 +142,7 @@ function Chat() {
                 websocket.send(JSON.stringify({ content: errorMsg, is_voice: false }))
               } else if (location.latitude && location.longitude) {
                 // Send location back to assistant
+                console.log('[Location] Sending coordinates to assistant')
                 const locationMsg = `My current location is: Latitude ${location.latitude.toFixed(6)}, Longitude ${location.longitude.toFixed(6)}.`
                 const locationMessage: Message = {
                   role: 'user',
@@ -144,8 +154,9 @@ function Chat() {
               }
               return
             }
-          } catch {
+          } catch (e) {
             // Not a JSON string, continue with normal message handling
+            console.log('[WS] Not JSON or parse failed:', e)
           }
 
           const newMessage: Message = {
