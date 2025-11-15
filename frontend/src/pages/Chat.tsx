@@ -8,6 +8,7 @@ import { ReadyPlayerMeCharacter } from '../components/ReadyPlayerMeCharacter'
 import { GLBCharacter } from '../components/GLBCharacter'
 import { getCurrentLocation } from '../hooks/useGeolocation'
 import ReactMarkdown from 'react-markdown'
+import { ResourceMap } from '../components/ResourceMap'
 import '../styles/Chat.css'
 
 interface Message {
@@ -68,11 +69,14 @@ function Chat() {
   const [conversationId, setConversationId] = useState<number | null>(null)
   const [ws, setWs] = useState<WebSocket | null>(null)
   const [report, setReport] = useState<string | null>(null)
+  const [reportResources, setReportResources] = useState<any[]>([])
   const [showReport, setShowReport] = useState(false)
   const [isVoiceMode, setIsVoiceMode] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [audioLevel, setAudioLevel] = useState(0)
+  const [resources, setResources] = useState<any[]>([])
+  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const recognitionRef = useRef<any>(null)
@@ -310,6 +314,12 @@ function Chat() {
                 setMessages(prev => [...prev, errorMessage])
                 websocket.send(JSON.stringify({ content: errorMsg, is_voice: false }))
               } else if (location.latitude && location.longitude) {
+                // Save user location for map
+                setUserLocation({
+                  latitude: location.latitude,
+                  longitude: location.longitude
+                })
+
                 // Send location back to assistant silently (don't add to messages array)
                 console.log('[Location] Sending coordinates to assistant')
                 const locationMsg = `My current location is: Latitude ${location.latitude.toFixed(6)}, Longitude ${location.longitude.toFixed(6)}.`
@@ -323,16 +333,39 @@ function Chat() {
             console.log('[WS] Not JSON or parse failed:', e)
           }
 
+          // Parse resource data if present
+          let displayContent = content
+          console.log('[Resources] Checking message for resource data...')
+          const resourceMatch = content.match(/<!-- RESOURCE_DATA:(.+?) -->/s)
+          if (resourceMatch) {
+            console.log('[Resources] Found resource data marker')
+            try {
+              const resourceData = JSON.parse(resourceMatch[1])
+              console.log('[Resources] Parsed resource data:', resourceData)
+              if (resourceData.type === 'resource_list' && resourceData.resources) {
+                setResources(resourceData.resources)
+                console.log('[Resources] Set', resourceData.resources.length, 'resources to state')
+              }
+              // Remove the resource data comment from display
+              displayContent = content.replace(/<!-- RESOURCE_DATA:.+? -->/s, '')
+            } catch (e) {
+              console.error('[Resources] Failed to parse resource data:', e)
+              console.error('[Resources] Raw match:', resourceMatch[1])
+            }
+          } else {
+            console.log('[Resources] No resource data found in message')
+          }
+
           const newMessage: Message = {
             role: data.role,
-            content: content,
+            content: displayContent,
             timestamp: data.timestamp
           }
           setMessages(prev => [...prev, newMessage])
 
           // Speak the response if in voice mode
           if (isVoiceMode && data.role === 'assistant') {
-            speakText(content)
+            speakText(displayContent)
           }
         }
 
@@ -389,25 +422,164 @@ function Chat() {
 
     try {
       const data = await api.endConversation(conversationId)
-      setReport(data.report)
+
+      // Parse resource data from report if present
+      console.log('[Report] Checking for resource data...')
+      const resourceMatch = data.report.match(/<!-- RESOURCE_DATA:(.+?) -->/s)
+      if (resourceMatch) {
+        console.log('[Report] Found resource data marker')
+        try {
+          const resourceData = JSON.parse(resourceMatch[1])
+          console.log('[Report] Parsed resource data:', resourceData)
+          if (resourceData.type === 'resource_list' && resourceData.resources) {
+            setReportResources(resourceData.resources)
+            console.log('[Report] Set', resourceData.resources.length, 'resources to state')
+          }
+          // Remove resource marker from displayed report
+          setReport(data.report.replace(/<!-- RESOURCE_DATA:.+? -->/s, ''))
+        } catch (e) {
+          console.error('[Report] Failed to parse resource data:', e)
+          setReport(data.report)
+        }
+      } else {
+        console.log('[Report] No resource data found')
+        setReport(data.report)
+      }
+
       setShowReport(true)
     } catch (err) {
       console.error('Error generating report:', err)
     }
   }
 
-  const downloadReport = () => {
+  const printReport = () => {
     if (!report) return
 
-    const blob = new Blob([report], { type: 'text/plain' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `assistance-report-${conversationId}.txt`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank')
+    if (!printWindow) return
+
+    // Create HTML content with proper styling
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Assistance Report</title>
+          <style>
+            @media print {
+              @page {
+                margin: 1in;
+              }
+            }
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+              line-height: 1.6;
+              color: #333;
+              max-width: 800px;
+              margin: 0 auto;
+              padding: 20px;
+            }
+            h1, h2, h3, h4, h5, h6 {
+              color: #2c3e50;
+              margin-top: 24px;
+              margin-bottom: 12px;
+            }
+            h1 { font-size: 2em; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; }
+            h2 { font-size: 1.5em; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; }
+            h3 { font-size: 1.25em; }
+            p { margin: 12px 0; }
+            ul, ol {
+              margin: 12px 0;
+              padding-left: 30px;
+            }
+            li { margin: 6px 0; }
+            strong { color: #2c3e50; }
+            code {
+              background: #f5f5f5;
+              padding: 2px 6px;
+              border-radius: 3px;
+              font-family: 'Courier New', monospace;
+              font-size: 0.9em;
+            }
+            pre {
+              background: #f5f5f5;
+              padding: 15px;
+              border-radius: 5px;
+              overflow-x: auto;
+            }
+            pre code {
+              background: none;
+              padding: 0;
+            }
+            blockquote {
+              border-left: 4px solid #3b82f6;
+              margin: 12px 0;
+              padding-left: 15px;
+              color: #666;
+            }
+            table {
+              border-collapse: collapse;
+              width: 100%;
+              margin: 15px 0;
+            }
+            th, td {
+              border: 1px solid #ddd;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f5f5f5;
+              font-weight: 600;
+            }
+            .print-header {
+              text-align: center;
+              margin-bottom: 30px;
+              padding-bottom: 20px;
+              border-bottom: 3px solid #3b82f6;
+            }
+            .print-footer {
+              margin-top: 40px;
+              padding-top: 20px;
+              border-top: 1px solid #e0e0e0;
+              text-align: center;
+              font-size: 0.9em;
+              color: #666;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="print-header">
+            <h1>Homeless Assistance Report</h1>
+            <p>Generated on ${new Date().toLocaleString()}</p>
+          </div>
+          <div class="report-content">
+            ${report.split('\n').map(line => {
+              // Simple markdown parsing
+              line = line.trim()
+              if (line.startsWith('# ')) return `<h1>${line.substring(2)}</h1>`
+              if (line.startsWith('## ')) return `<h2>${line.substring(3)}</h2>`
+              if (line.startsWith('### ')) return `<h3>${line.substring(4)}</h3>`
+              if (line.startsWith('- ')) return `<li>${line.substring(2)}</li>`
+              if (line.startsWith('* ')) return `<li>${line.substring(2)}</li>`
+              if (line.startsWith('**') && line.endsWith('**')) return `<p><strong>${line.substring(2, line.length - 2)}</strong></p>`
+              if (line === '') return '<br>'
+              return `<p>${line}</p>`
+            }).join('\n')}
+          </div>
+          <div class="print-footer">
+            <p>Report ID: ${conversationId}</p>
+          </div>
+          <script>
+            window.onload = () => {
+              window.print()
+            }
+          </script>
+        </body>
+      </html>
+    `
+
+    printWindow.document.write(htmlContent)
+    printWindow.document.close()
   }
 
   return (
@@ -466,10 +638,10 @@ function Chat() {
                 onClick={() => setIsVoiceMode(!isVoiceMode)}
                 className={`control-btn ${isVoiceMode ? 'active' : ''}`}
               >
-                {isVoiceMode ? '🎤 Voice Mode' : '⌨️ Text Mode'}
+                {isVoiceMode ? 'Voice Mode' : 'Text Mode'}
               </button>
               <button onClick={generateReport} className="control-btn report-btn">
-                📄 Generate Report
+                Generate Report
               </button>
             </div>
           </div>
@@ -485,6 +657,14 @@ function Chat() {
                 </div>
               </div>
             ))}
+
+            {/* Display map if resources are found */}
+            {resources.length > 0 && (
+              <div style={{ margin: '20px 30px' }}>
+                <ResourceMap resources={resources} userLocation={userLocation || undefined} />
+              </div>
+            )}
+
             <div ref={messagesEndRef} />
           </div>
 
@@ -511,13 +691,13 @@ function Chat() {
             onClick={() => setIsVoiceMode(false)}
             className="exit-voice-btn"
           >
-            ⌨️ Exit Voice Mode
+            Exit Voice Mode
           </button>
           <button
             onClick={isRecording ? stopRecording : startRecording}
             className={`voice-btn ${isRecording ? 'recording' : ''}`}
           >
-            {isRecording ? '⏹️ Stop Recording' : '🎤 Click to Speak'}
+            {isRecording ? 'Stop Recording' : 'Click to Speak'}
           </button>
         </div>
       )}
@@ -525,14 +705,39 @@ function Chat() {
       {/* Report Modal */}
       {showReport && (
         <div className="modal-overlay" onClick={() => setShowReport(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content report-modal" onClick={(e) => e.stopPropagation()}>
             <h2>Assistance Report</h2>
-            <div className="report-content">
-              {report}
+            <div className="markdown-report">
+              <ReactMarkdown
+                components={{
+                  code: ({ node, inline, className, children, ...props }: any) =>
+                    inline ? (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    ) : (
+                      <pre>
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      </pre>
+                    )
+                }}
+              >
+                {report || ''}
+              </ReactMarkdown>
+
+              {/* Display map if resources are included in the report */}
+              {reportResources.length > 0 && (
+                <div style={{ marginTop: '30px' }}>
+                  <h3>Resource Locations Map</h3>
+                  <ResourceMap resources={reportResources} userLocation={userLocation || undefined} />
+                </div>
+              )}
             </div>
             <div className="modal-actions">
-              <button onClick={downloadReport} className="btn-primary">
-                Download Report
+              <button onClick={printReport} className="btn-primary">
+                Print / Save as PDF
               </button>
               <button onClick={() => setShowReport(false)} className="btn-secondary">
                 Close

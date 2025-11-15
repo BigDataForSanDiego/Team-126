@@ -129,8 +129,8 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1>{isLogin ? 'Welcome Back' : 'Create Account'}</h1>
-        <p className="subtitle">Homeless Assistance Chatbot</p>
+        <h1>Welcome to Good Talks</h1>
+        <p className="subtitle">Your AI companion for assistance and support</p>
 
         {error && <div className="error-message">{error}</div>}
 
