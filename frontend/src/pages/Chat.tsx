@@ -16,21 +16,21 @@ interface Message {
   timestamp: string
 }
 
-// 🎨 角色配置 - 在这里切换不同的角色类型
+// Character configuration - switch between different character types here
 const CHARACTER_CONFIG = {
-  // 选择角色类型：'improved' | 'readyplayerme' | 'glb'
+  // Select character type: 'improved' | 'readyplayerme' | 'glb'
   type: 'readyplayerme' as 'improved' | 'readyplayerme' | 'glb',
 
-  // Ready Player Me 头像URL（如果使用readyplayerme类型）
-  // 访问 https://readyplayer.me/ 创建并获取URL
+  // Ready Player Me avatar URL (if using readyplayerme type)
+  // Visit https://readyplayer.me/ to create and get URL
   readyPlayerMeUrl: 'https://models.readyplayer.me/6917b775672cca15c2f35e05.glb',
 
-  // GLB模型路径（如果使用glb类型）
-  // 将.glb文件放到 frontend/public/models/ 目录
+  // GLB model path (if using glb type)
+  // Place .glb files in the frontend/public/models/ directory
   glbModelPath: '/models/character.glb',
 }
 
-// 简单的Character组件作为降级方案
+// Simple Character component as a fallback
 function Character({ color }: { color: string }) {
   return (
     <group>
@@ -67,19 +67,194 @@ function Chat() {
   const [inputMessage, setInputMessage] = useState('')
   const [conversationId, setConversationId] = useState<number | null>(null)
   const [ws, setWs] = useState<WebSocket | null>(null)
+  const [report, setReport] = useState<string | null>(null)
+  const [showReport, setShowReport] = useState(false)
   const [isVoiceMode, setIsVoiceMode] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
-  const [report, setReport] = useState<string | null>(null)
-  const [showReport, setShowReport] = useState(false)
+  const [audioLevel, setAudioLevel] = useState(0)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const recognitionRef = useRef<any>(null)
+  const recordingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const audioContextRef = useRef<AudioContext | null>(null)
+  const analyserRef = useRef<AnalyserNode | null>(null)
+  const animationFrameRef = useRef<number | null>(null)
   const { user } = useAuthStore()
 
   const characterColor = user?.character_id
     ? ['#4a90e2', '#7b68ee', '#50c878', '#ff6b6b'][user.character_id - 1] || '#4a90e2'
     : '#4a90e2'
+
+  // Initialize speech recognition
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+      if (SpeechRecognition) {
+        const recognition = new SpeechRecognition()
+        recognition.continuous = false
+        recognition.interimResults = false
+        recognition.lang = 'en-US'
+
+        recognition.onstart = () => {
+          console.log('[Speech] Recognition started')
+          setIsRecording(true)
+        }
+
+        recognition.onresult = (event: any) => {
+          const transcript = event.results[0][0].transcript
+          const confidence = event.results[0][0].confidence
+
+          console.log('========================================')
+          console.log('[Speech Recognition] DETECTED TEXT:', transcript)
+          console.log('[Speech Recognition] Confidence:', (confidence * 100).toFixed(1) + '%')
+          console.log('========================================')
+
+          // Clear timeout
+          if (recordingTimeoutRef.current) {
+            clearTimeout(recordingTimeoutRef.current)
+            recordingTimeoutRef.current = null
+          }
+
+          setIsRecording(false)
+          if (transcript) {
+            sendMessage(transcript, true)
+          }
+        }
+
+        recognition.onerror = (event: any) => {
+          console.error('[Speech] Error:', event.error)
+
+          // Clear timeout
+          if (recordingTimeoutRef.current) {
+            clearTimeout(recordingTimeoutRef.current)
+            recordingTimeoutRef.current = null
+          }
+
+          setIsRecording(false)
+        }
+
+        recognition.onend = () => {
+          console.log('[Speech] Recognition ended')
+
+          // Clear timeout
+          if (recordingTimeoutRef.current) {
+            clearTimeout(recordingTimeoutRef.current)
+            recordingTimeoutRef.current = null
+          }
+
+          setIsRecording(false)
+        }
+
+        recognitionRef.current = recognition
+      } else {
+        console.warn('[Speech] Speech recognition not supported')
+      }
+    }
+  }, [])
+
+  // Analyze audio for lip-sync animation
+  const analyzeAudio = () => {
+    if (!analyserRef.current) return
+
+    const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount)
+    analyserRef.current.getByteFrequencyData(dataArray)
+
+    // Calculate average volume for lip-sync
+    const average = dataArray.reduce((a, b) => a + b) / dataArray.length
+    const normalizedLevel = Math.min(average / 128, 1)
+    setAudioLevel(normalizedLevel)
+
+    // Continue animation loop
+    animationFrameRef.current = requestAnimationFrame(analyzeAudio)
+  }
+
+  // Text-to-speech function with lip-sync
+  const speakText = (text: string) => {
+    if ('speechSynthesis' in window) {
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel()
+
+      setIsSpeaking(true)
+      const utterance = new SpeechSynthesisUtterance(text)
+      utterance.rate = 1.0
+      utterance.pitch = 1.0
+      utterance.volume = 1.0
+
+      // Start lip-sync animation
+      utterance.onstart = () => {
+        // Start audio analysis for lip-sync (simplified version)
+        // We'll use a simple mouth opening animation based on speaking state
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current)
+        }
+        // Simulate mouth movement with random values during speech
+        const animateMouth = () => {
+          if (!window.speechSynthesis.speaking) {
+            setAudioLevel(0)
+            return
+          }
+          setAudioLevel(0.3 + Math.random() * 0.4)
+          animationFrameRef.current = requestAnimationFrame(animateMouth)
+        }
+        animateMouth()
+      }
+
+      utterance.onend = () => {
+        setIsSpeaking(false)
+        setAudioLevel(0)
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current)
+        }
+      }
+
+      utterance.onerror = () => {
+        setIsSpeaking(false)
+        setAudioLevel(0)
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current)
+        }
+      }
+
+      window.speechSynthesis.speak(utterance)
+    }
+  }
+
+  // Start voice recording
+  const startRecording = () => {
+    if (recognitionRef.current && !isRecording) {
+      try {
+        recognitionRef.current.start()
+
+        // Set a safety timeout to auto-stop after 10 seconds
+        recordingTimeoutRef.current = setTimeout(() => {
+          console.log('[Speech] Auto-stopping after timeout')
+          stopRecording()
+        }, 10000)
+      } catch (error) {
+        console.error('[Speech] Failed to start:', error)
+      }
+    }
+  }
+
+  // Stop voice recording
+  const stopRecording = () => {
+    if (recognitionRef.current && isRecording) {
+      try {
+        // Clear the timeout
+        if (recordingTimeoutRef.current) {
+          clearTimeout(recordingTimeoutRef.current)
+          recordingTimeoutRef.current = null
+        }
+
+        recognitionRef.current.stop()
+        setIsRecording(false)
+        console.log('[Speech] Manually stopped recording')
+      } catch (error) {
+        console.error('[Speech] Failed to stop:', error)
+      }
+    }
+  }
 
   useEffect(() => {
     // Initialize conversation
@@ -116,13 +291,7 @@ function Chat() {
             if (parsedContent.type === 'request_location') {
               console.log('[WS] Location request detected!')
 
-              // Display the message asking for permission
-              const requestMessage: Message = {
-                role: 'assistant',
-                content: parsedContent.message,
-                timestamp: data.timestamp
-              }
-              setMessages(prev => [...prev, requestMessage])
+              // DO NOT display the location request message - handle it silently in the background
 
               // Automatically get location
               console.log('[Location] Requesting location from browser...')
@@ -141,15 +310,10 @@ function Chat() {
                 setMessages(prev => [...prev, errorMessage])
                 websocket.send(JSON.stringify({ content: errorMsg, is_voice: false }))
               } else if (location.latitude && location.longitude) {
-                // Send location back to assistant
+                // Send location back to assistant silently (don't add to messages array)
                 console.log('[Location] Sending coordinates to assistant')
                 const locationMsg = `My current location is: Latitude ${location.latitude.toFixed(6)}, Longitude ${location.longitude.toFixed(6)}.`
-                const locationMessage: Message = {
-                  role: 'user',
-                  content: locationMsg,
-                  timestamp: new Date().toISOString()
-                }
-                setMessages(prev => [...prev, locationMessage])
+                // DO NOT add locationMessage to messages array - keep it in the background
                 websocket.send(JSON.stringify({ content: locationMsg, is_voice: false }))
               }
               return
@@ -166,8 +330,8 @@ function Chat() {
           }
           setMessages(prev => [...prev, newMessage])
 
-          // Speak response if in voice mode
-          if (isVoiceMode) {
+          // Speak the response if in voice mode
+          if (isVoiceMode && data.role === 'assistant') {
             speakText(content)
           }
         }
@@ -184,34 +348,9 @@ function Chat() {
 
     initConversation()
 
-    // Initialize speech recognition
-    if ('webkitSpeechRecognition' in window) {
-      const SpeechRecognition = (window as any).webkitSpeechRecognition
-      recognitionRef.current = new SpeechRecognition()
-      recognitionRef.current.continuous = false
-      recognitionRef.current.interimResults = false
-
-      recognitionRef.current.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript
-        sendMessage(transcript, true)
-        setIsRecording(false)
-      }
-
-      recognitionRef.current.onerror = () => {
-        setIsRecording(false)
-      }
-
-      recognitionRef.current.onend = () => {
-        setIsRecording(false)
-      }
-    }
-
     return () => {
       if (ws) {
         ws.close()
-      }
-      if (recognitionRef.current) {
-        recognitionRef.current.stop()
       }
     }
   }, [user])
@@ -245,30 +384,6 @@ function Chat() {
     }
   }
 
-  const toggleVoiceMode = () => {
-    setIsVoiceMode(!isVoiceMode)
-    if (isSpeaking) {
-      window.speechSynthesis.cancel()
-      setIsSpeaking(false)
-    }
-  }
-
-  const startRecording = () => {
-    if (recognitionRef.current && !isRecording) {
-      setIsRecording(true)
-      recognitionRef.current.start()
-    }
-  }
-
-  const speakText = (text: string) => {
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(text)
-      utterance.onstart = () => setIsSpeaking(true)
-      utterance.onend = () => setIsSpeaking(false)
-      window.speechSynthesis.speak(utterance)
-    }
-  }
-
   const generateReport = async () => {
     if (!conversationId) return
 
@@ -296,18 +411,18 @@ function Chat() {
   }
 
   return (
-    <div className="chat-container">
+    <div className={`chat-container ${isVoiceMode ? 'voice-mode-layout' : ''}`}>
       {/* Character Display */}
-      <div className="character-display">
+      <div className={`character-display ${isVoiceMode ? 'voice-mode-character' : ''}`}>
         <Canvas camera={{ position: [0, 0.8, 3.5], fov: 50 }}>
-          {/* 增强光照以正确显示Ready Player Me角色颜色 */}
+          {/* Enhanced lighting to correctly display Ready Player Me character colors */}
           <ambientLight intensity={1.5} />
           <directionalLight position={[5, 5, 5]} intensity={2.0} castShadow />
           <directionalLight position={[-5, 3, -5]} intensity={1.0} />
           <pointLight position={[0, 2, 4]} intensity={1.2} color="#ffffff" />
           <hemisphereLight args={['#ffffff', '#8888ff', 0.8]} />
 
-          {/* 根据配置渲染不同类型的角色 */}
+          {/* Render different types of characters based on configuration */}
           {CHARACTER_CONFIG.type === 'improved' && (
             <ImprovedCharacter
               color={characterColor}
@@ -320,6 +435,7 @@ function Chat() {
             <ReadyPlayerMeCharacter
               avatarUrl={CHARACTER_CONFIG.readyPlayerMeUrl}
               isSpeaking={isSpeaking}
+              audioLevel={audioLevel}
             />
           )}
 
@@ -340,63 +456,71 @@ function Chat() {
         </Canvas>
       </div>
 
-      {/* Chat Interface */}
-      <div className="chat-interface">
-        <div className="chat-header">
-          <h2>How can I help you today?</h2>
-          <div className="chat-controls">
-            <button
-              onClick={toggleVoiceMode}
-              className={`control-btn ${isVoiceMode ? 'active' : ''}`}
-            >
-              {isVoiceMode ? '🔊 Voice On' : '💬 Text Mode'}
-            </button>
-            <button onClick={generateReport} className="control-btn report-btn">
-              📄 Generate Report
+      {/* Chat Interface - Hidden in Voice Mode */}
+      {!isVoiceMode && (
+        <div className="chat-interface">
+          <div className="chat-header">
+            <h2>How can I help you today?</h2>
+            <div className="chat-controls">
+              <button
+                onClick={() => setIsVoiceMode(!isVoiceMode)}
+                className={`control-btn ${isVoiceMode ? 'active' : ''}`}
+              >
+                {isVoiceMode ? '🎤 Voice Mode' : '⌨️ Text Mode'}
+              </button>
+              <button onClick={generateReport} className="control-btn report-btn">
+                📄 Generate Report
+              </button>
+            </div>
+          </div>
+
+          <div className="messages-container">
+            {messages.map((msg, index) => (
+              <div key={index} className={`message ${msg.role}`}>
+                <div className="message-content">
+                  <strong>{msg.role === 'user' ? 'You' : 'Assistant'}</strong>
+                  <div className="markdown-content">
+                    <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+
+          <div className="input-container">
+            <input
+              type="text"
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Type your message..."
+              className="message-input"
+            />
+            <button onClick={handleSendMessage} className="send-btn">
+              Send
             </button>
           </div>
         </div>
+      )}
 
-        <div className="messages-container">
-          {messages.map((msg, index) => (
-            <div key={index} className={`message ${msg.role}`}>
-              <div className="message-content">
-                <strong>{msg.role === 'user' ? 'You' : 'Assistant'}:</strong>
-                <div className="markdown-content">
-                  <ReactMarkdown>{msg.content}</ReactMarkdown>
-                </div>
-              </div>
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
+      {/* Voice Mode Controls */}
+      {isVoiceMode && (
+        <div className="voice-mode-controls">
+          <button
+            onClick={() => setIsVoiceMode(false)}
+            className="exit-voice-btn"
+          >
+            ⌨️ Exit Voice Mode
+          </button>
+          <button
+            onClick={isRecording ? stopRecording : startRecording}
+            className={`voice-btn ${isRecording ? 'recording' : ''}`}
+          >
+            {isRecording ? '⏹️ Stop Recording' : '🎤 Click to Speak'}
+          </button>
         </div>
-
-        <div className="input-container">
-          {isVoiceMode ? (
-            <button
-              onClick={startRecording}
-              disabled={isRecording}
-              className={`voice-btn ${isRecording ? 'recording' : ''}`}
-            >
-              {isRecording ? '🎤 Recording...' : '🎤 Hold to Speak'}
-            </button>
-          ) : (
-            <>
-              <input
-                type="text"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Type your message..."
-                className="message-input"
-              />
-              <button onClick={handleSendMessage} className="send-btn">
-                Send
-              </button>
-            </>
-          )}
-        </div>
-      </div>
+      )}
 
       {/* Report Modal */}
       {showReport && (

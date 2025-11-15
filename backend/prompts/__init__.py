@@ -1,0 +1,4 @@
+"""Prompts package"""
+from .system_prompt import HOMELESS_ASSISTANT_PROMPT, REPORT_GENERATION_PROMPT
+
+__all__ = ['HOMELESS_ASSISTANT_PROMPT', 'REPORT_GENERATION_PROMPT']

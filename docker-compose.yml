@@ -2,7 +2,10 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:16-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    image: homeless-assistant-postgres:latest  # Custom PostgreSQL 16 with PostGIS and pgvector
     container_name: homeless_assistant_db
     restart: unless-stopped
     environment:
@@ -14,6 +17,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./backend/init_extensions.sql:/docker-entrypoint-initdb.d/init_extensions.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U homeless_assistant -d homeless_assistant_db"]
       interval: 10s

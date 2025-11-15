@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Boolean, Float
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from database import Base
+from pgvector.sqlalchemy import Vector
 
 
 class User(Base):
@@ -27,6 +28,8 @@ class Conversation(Base):
     started_at = Column(DateTime, default=datetime.utcnow)
     ended_at = Column(DateTime, nullable=True)
     report = Column(Text, nullable=True)
+    latitude = Column(Float, nullable=True)  # User's current latitude
+    longitude = Column(Float, nullable=True)  # User's current longitude
 
     user = relationship("User", back_populates="conversations")
     messages = relationship("Message", back_populates="conversation")
@@ -41,5 +44,8 @@ class Message(Base):
     content = Column(Text)
     timestamp = Column(DateTime, default=datetime.utcnow)
     is_voice = Column(Boolean, default=False)
+    latitude = Column(Float, nullable=True)  # User's latitude (if location shared)
+    longitude = Column(Float, nullable=True)  # User's longitude (if location shared)
+    embedding = Column(Vector(768), nullable=True)  # Semantic embedding of message content
 
     conversation = relationship("Conversation", back_populates="messages")

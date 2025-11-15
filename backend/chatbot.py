@@ -1,11 +1,14 @@
-from typing import List, Dict
+from typing import List, Dict, Optional
 import os
 import json
 from google.cloud import aiplatform
 from google.oauth2 import service_account
-from vertexai.generative_models import GenerativeModel, ChatSession, Content, Part, Tool, FunctionDeclaration
+from vertexai.generative_models import GenerativeModel, ChatSession, Content, Part, Tool
 import vertexai
 from dotenv import load_dotenv
+
+from prompts import HOMELESS_ASSISTANT_PROMPT, REPORT_GENERATION_PROMPT
+from tools import location_tool, search_web_func, perform_web_search
 
 load_dotenv()
 
@@ -57,89 +60,29 @@ except Exception as e:
     print("  2. Set VERTEX_AI_PRIVATE_KEY_ID, VERTEX_AI_PRIVATE_KEY, and VERTEX_AI_CLIENT_EMAIL in .env")
     print("  3. Ensure the service account has Vertex AI permissions")
 
-# Define tools for the AI assistant
-get_location_func = FunctionDeclaration(
-    name="request_user_location",
-    description="Request the user's current GPS location to help find nearby resources such as shelters, food banks, or services. Use this when the user needs location-based assistance.",
-    parameters={
-        "type": "object",
-        "properties": {
-            "reason": {
-                "type": "string",
-                "description": "Brief explanation of why location is needed (e.g., 'to find nearby shelters')"
-            }
-        },
-        "required": ["reason"]
-    },
-)
 
-location_tool = Tool(
-    function_declarations=[get_location_func],
-)
-
-SYSTEM_PROMPT = """You are a powerful AI assistant dedicated to helping people overcome homelessness and rebuild their lives. Your mission is to empower individuals with actionable solutions and confidence.
-
-IMPORTANT: You have access to a location tool. When someone asks about their location, needs nearby resources, or asks questions like "where am I?" or "what's near me?", you MUST use the request_user_location function to get their GPS coordinates. Do NOT say you cannot access location - use the tool instead.
-
-YOUR APPROACH:
-- Be direct, practical, and solution-focused
-- Speak with confidence and authority about available resources
-- Focus on what THEY CAN DO, not what's wrong
-- Provide clear, actionable steps they can take TODAY
-- Build their confidence by highlighting their strengths and potential
-
-CRITICAL RESOURCES TO PROVIDE:
-1. **Immediate Needs** (TODAY):
-   - Emergency shelters with addresses and phone numbers
-   - Food banks and free meal programs with specific times/locations
-   - Free healthcare clinics and mental health services
-   - Safe spaces and day centers
-
-2. **Path Forward** (THIS WEEK/MONTH):
-   - Job training programs and employment agencies
-   - Housing assistance programs and applications
-   - Benefits enrollment (SNAP, Medicaid, etc.)
-   - Free skills training and education programs
-
-3. **Long-term Stability** (NEXT 3-6 MONTHS):
-   - Career development resources
-   - Financial literacy programs
-   - Permanent housing options
-   - Community support networks
-
-YOUR COMMUNICATION STYLE:
-- Use powerful, encouraging language: "You CAN do this", "Let's get you started", "Here's your action plan"
-- Give specific, concrete steps with deadlines
-- Celebrate small wins and progress
-- Remind them of their resilience and capability
-- NO pity or sympathy - only respect and practical help
-
-IMMEDIATE ACTION:
-If someone needs help NOW, immediately provide:
-- Specific addresses and phone numbers
-- Operating hours and availability
-- What documents to bring
-- What to expect when they arrive
-
-Remember: Your goal is to help them take CONTROL of their situation and move forward with confidence. Every person has the power to change their circumstances with the right support and resources."""
-
-
-async def get_chatbot_response(messages: List[Dict[str, str]]) -> str:
+async def get_chatbot_response(messages: List[Dict[str, str]], conversation: Optional[object] = None) -> str:
     """
     Get response from Vertex AI chatbot using Gemini with Function Calling
 
     Args:
         messages: List of message dictionaries with 'role' and 'content' keys
+        conversation: Optional Conversation object containing user's location (latitude, longitude)
 
     Returns:
         Assistant's response as a string or JSON for function calls
     """
     try:
+        # Create search tool
+        search_tool = Tool(
+            function_declarations=[search_web_func],
+        )
+
         # Initialize the model with tools
         model = GenerativeModel(
             model_name="gemini-2.0-flash-exp",
-            system_instruction=SYSTEM_PROMPT,
-            tools=[location_tool],
+            system_instruction=HOMELESS_ASSISTANT_PROMPT,
+            tools=[location_tool, search_tool],
         )
 
         # Start chat session
@@ -185,6 +128,48 @@ async def get_chatbot_response(messages: List[Dict[str, str]]) -> str:
                                 "reason": reason,
                                 "message": f"I'd like to help you find nearby resources. May I access your location {reason}?"
                             })
+
+                        elif function_call.name == "search_web":
+                            # Execute the web search
+                            query = function_call.args.get("query", "")
+                            max_results = function_call.args.get("max_results", 5)
+                            print(f"Performing web search: {query}")
+
+                            # Get location from conversation if available
+                            latitude = None
+                            longitude = None
+                            if conversation and hasattr(conversation, 'latitude') and hasattr(conversation, 'longitude'):
+                                latitude = conversation.latitude
+                                longitude = conversation.longitude
+                                print(f"Using conversation location: {latitude}, {longitude}")
+
+                            search_results = perform_web_search(query, max_results, latitude, longitude)
+
+                            # Format search results for the LLM
+                            results_text = f"Search results for '{query}':\n\n"
+                            for idx, result in enumerate(search_results, 1):
+                                results_text += f"{idx}. {result['title']}\n"
+                                results_text += f"   {result['snippet']}\n"
+                                if result['url']:
+                                    results_text += f"   URL: {result['url']}\n"
+                                results_text += "\n"
+
+                            # Send search results back to the model to continue the conversation
+                            function_response = Part.from_function_response(
+                                name="search_web",
+                                response={"results": results_text}
+                            )
+
+                            # Continue the conversation with the search results
+                            response = chat.send_message(
+                                Content(parts=[function_response]),
+                                generation_config={
+                                    'temperature': 0.7,
+                                    'max_output_tokens': 500,
+                                }
+                            )
+
+                            return response.text
 
             return response.text
         else:

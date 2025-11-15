@@ -9,17 +9,17 @@ interface GLBCharacterProps {
 }
 
 /**
- * 通用的GLB/GLTF模型加载组件
+ * Generic GLB/GLTF model loading component
  *
- * 使用方法：
- * 1. 从以下网站下载免费3D模型：
- *    - Mixamo (https://www.mixamo.com/) - 带动画的人物模型
- *    - Sketchfab (https://sketchfab.com/) - 免费3D模型库
- *    - Ready Player Me (https://readyplayer.me/) - 自定义头像
+ * Usage:
+ * 1. Download free 3D models from the following websites:
+ *    - Mixamo (https://www.mixamo.com/) - Animated character models
+ *    - Sketchfab (https://sketchfab.com/) - Free 3D model library
+ *    - Ready Player Me (https://readyplayer.me/) - Custom avatars
  *
- * 2. 将.glb文件放在 /public/models/ 目录下
+ * 2. Place .glb files in the /public/models/ directory
  *
- * 3. 使用：
+ * 3. Usage:
  *    <GLBCharacter modelPath="/models/character.glb" animationName="idle" />
  */
 export function GLBCharacter({
@@ -32,18 +32,18 @@ export function GLBCharacter({
   const { actions, names } = useAnimations(animations, group)
 
   useEffect(() => {
-    // 播放指定动画
+    // Play the specified animation
     if (isSpeaking && actions['talking']) {
       actions['talking']?.play()
     } else if (actions[animationName]) {
       actions[animationName]?.play()
     } else if (names.length > 0) {
-      // 如果没有找到指定动画，播放第一个动画
+      // If the specified animation is not found, play the first animation
       actions[names[0]]?.play()
     }
 
     return () => {
-      // 清理动画
+      // Clean up animations
       Object.values(actions).forEach(action => action?.stop())
     }
   }, [actions, animationName, isSpeaking, names])
@@ -55,7 +55,7 @@ export function GLBCharacter({
   )
 }
 
-// 预加载模型以提升性能
+// Preload models to improve performance
 export function preloadModel(modelPath: string) {
   useGLTF.preload(modelPath)
 }

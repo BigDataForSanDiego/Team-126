@@ -8,10 +8,10 @@ import { ImprovedCharacter } from '../components/ImprovedCharacter'
 import { ReadyPlayerMeCharacter } from '../components/ReadyPlayerMeCharacter'
 import '../styles/CharacterSelect.css'
 
-// 🎨 角色类型配置
-const USE_READY_PLAYER_ME = true  // 设置为true使用Ready Player Me角色
+// Character type configuration
+const USE_READY_PLAYER_ME = true  // Set to true to use Ready Player Me characters
 
-// 🎭 通用角色配置
+// General character configuration
 const characters = [
   {
     id: 1,
@@ -27,7 +27,7 @@ const characters = [
   },
 ]
 
-// 简单的Character组件作为降级方案
+// Simple Character component as a fallback
 function Character({ color }: { color: string }) {
   return (
     <group>
@@ -104,14 +104,14 @@ function CharacterSelect() {
             >
               <div className="character-preview">
                 <Canvas camera={{ position: [0, 0.8, 3.5], fov: 50 }}>
-                  {/* 增强光照以显示颜色 */}
+                  {/* Enhanced lighting to display colors */}
                   <ambientLight intensity={1.2} />
                   <directionalLight position={[5, 5, 5]} intensity={1.5} castShadow />
                   <directionalLight position={[-5, 3, -5]} intensity={0.8} />
                   <pointLight position={[0, 2, 3]} intensity={1.0} color="#ffffff" />
                   <hemisphereLight args={['#ffffff', '#8888ff', 0.6]} />
 
-                  {/* 根据配置使用Ready Player Me或改进的角色 */}
+                  {/* Use Ready Player Me or improved character based on configuration */}
                   {USE_READY_PLAYER_ME ? (
                     <ReadyPlayerMeCharacter
                       avatarUrl={character.rpmUrl}

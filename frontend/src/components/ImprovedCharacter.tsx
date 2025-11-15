@@ -9,12 +9,12 @@ interface ImprovedCharacterProps {
 }
 
 /**
- * 改进的3D拟人角色组件
- * 特点：
- * - 更拟人化的比例
- * - 面部表情（眼睛、嘴巴）
- * - 说话时的动画
- * - 呼吸效果
+ * Improved 3D humanoid character component
+ * Features:
+ * - More humanoid proportions
+ * - Facial expressions (eyes, mouth)
+ * - Animations when speaking
+ * - Breathing effects
  */
 export function ImprovedCharacter({
   color,
@@ -27,32 +27,32 @@ export function ImprovedCharacter({
   const rightEyeRef = useRef<THREE.Mesh>(null)
   const mouthRef = useRef<THREE.Mesh>(null)
 
-  // 动画逻辑
+  // Animation logic
   useFrame((state) => {
     if (!groupRef.current) return
 
     const time = state.clock.getElapsedTime()
 
-    // 整体轻微摇摆（呼吸效果）
+    // Gentle swaying (breathing effect)
     groupRef.current.position.y = Math.sin(time * 1.5) * 0.05
 
-    // 头部说话时的动画
+    // Head animation when speaking
     if (isSpeaking && headRef.current) {
       headRef.current.rotation.x = Math.sin(time * 10) * 0.05
 
-      // 嘴巴张合
+      // Mouth opening and closing
       if (mouthRef.current) {
         const mouthScale = 1 + Math.abs(Math.sin(time * 12)) * 0.3
         mouthRef.current.scale.set(mouthScale, 1, 1)
       }
     } else {
-      // 静止时轻微点头
+      // Gentle nodding when idle
       if (headRef.current) {
         headRef.current.rotation.x = Math.sin(time * 0.5) * 0.02
       }
     }
 
-    // 眨眼动画
+    // Blinking animation
     const blinkTime = Math.floor(time * 2) % 5
     if (blinkTime === 0 && leftEyeRef.current && rightEyeRef.current) {
       const blinkScale = Math.max(0.1, Math.abs(Math.sin(time * 20)))
@@ -64,7 +64,7 @@ export function ImprovedCharacter({
     }
   })
 
-  // 根据情绪调整面部特征
+  // Adjust facial features based on emotion
   const mouthCurve = useMemo(() => {
     switch (emotion) {
       case 'happy':
@@ -84,24 +84,24 @@ export function ImprovedCharacter({
 
   return (
     <group ref={groupRef}>
-      {/* 头部 */}
+      {/* Head */}
       <mesh ref={headRef} position={[0, 1.6, 0]}>
         <sphereGeometry args={[0.35, 32, 32]} />
         <meshStandardMaterial color={color} />
 
-        {/* 左眼 */}
+        {/* Left eye */}
         <mesh ref={leftEyeRef} position={[-0.12, 0.1, 0.3]}>
           <sphereGeometry args={[0.05, 16, 16]} />
           <meshStandardMaterial color="#000000" />
         </mesh>
 
-        {/* 右眼 */}
+        {/* Right eye */}
         <mesh ref={rightEyeRef} position={[0.12, 0.1, 0.3]}>
           <sphereGeometry args={[0.05, 16, 16]} />
           <meshStandardMaterial color="#000000" />
         </mesh>
 
-        {/* 嘴巴 */}
+        {/* Mouth */}
         <mesh ref={mouthRef} position={[0, -0.1, 0.32]}>
           <extrudeGeometry
             args={[
@@ -113,38 +113,38 @@ export function ImprovedCharacter({
         </mesh>
       </mesh>
 
-      {/* 颈部 */}
+      {/* Neck */}
       <mesh position={[0, 1.25, 0]}>
         <cylinderGeometry args={[0.12, 0.15, 0.2, 16]} />
         <meshStandardMaterial color={color} />
       </mesh>
 
-      {/* 身体 */}
+      {/* Body */}
       <mesh position={[0, 0.7, 0]}>
         <capsuleGeometry args={[0.35, 0.8, 16, 32]} />
         <meshStandardMaterial color={color} />
       </mesh>
 
-      {/* 左臂 */}
+      {/* Left arm */}
       <group position={[-0.45, 1.0, 0]}>
-        {/* 上臂 */}
+        {/* Upper arm */}
         <mesh position={[0, -0.25, 0]} rotation={[0, 0, Math.PI / 8]}>
           <capsuleGeometry args={[0.08, 0.4, 8, 16]} />
           <meshStandardMaterial color={color} />
         </mesh>
-        {/* 下臂 */}
+        {/* Lower arm */}
         <mesh position={[-0.08, -0.6, 0]} rotation={[0, 0, Math.PI / 12]}>
           <capsuleGeometry args={[0.07, 0.35, 8, 16]} />
           <meshStandardMaterial color={color} />
         </mesh>
-        {/* 手 */}
+        {/* Hand */}
         <mesh position={[-0.1, -0.85, 0]}>
           <sphereGeometry args={[0.1, 16, 16]} />
           <meshStandardMaterial color={color} />
         </mesh>
       </group>
 
-      {/* 右臂 */}
+      {/* Right arm */}
       <group position={[0.45, 1.0, 0]}>
         <mesh position={[0, -0.25, 0]} rotation={[0, 0, -Math.PI / 8]}>
           <capsuleGeometry args={[0.08, 0.4, 8, 16]} />
@@ -160,26 +160,26 @@ export function ImprovedCharacter({
         </mesh>
       </group>
 
-      {/* 左腿 */}
+      {/* Left leg */}
       <group position={[-0.15, 0.2, 0]}>
-        {/* 大腿 */}
+        {/* Thigh */}
         <mesh position={[0, -0.25, 0]}>
           <capsuleGeometry args={[0.12, 0.45, 12, 16]} />
           <meshStandardMaterial color={color} />
         </mesh>
-        {/* 小腿 */}
+        {/* Calf */}
         <mesh position={[0, -0.65, 0]}>
           <capsuleGeometry args={[0.1, 0.4, 12, 16]} />
           <meshStandardMaterial color={color} />
         </mesh>
-        {/* 脚 */}
+        {/* Foot */}
         <mesh position={[0, -0.95, 0.08]}>
           <boxGeometry args={[0.12, 0.08, 0.25]} />
           <meshStandardMaterial color={color} />
         </mesh>
       </group>
 
-      {/* 右腿 */}
+      {/* Right leg */}
       <group position={[0.15, 0.2, 0]}>
         <mesh position={[0, -0.25, 0]}>
           <capsuleGeometry args={[0.12, 0.45, 12, 16]} />

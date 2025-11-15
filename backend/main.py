@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from datetime import timedelta, datetime, timezone
 from typing import Optional, List
 import json
+import re
 # import face_recognition  # Commented out - install dlib if you need face recognition
 import numpy as np
 from pydantic import BaseModel
@@ -20,6 +21,8 @@ from auth import (
     ACCESS_TOKEN_EXPIRE_MINUTES
 )
 from chatbot import get_chatbot_response, generate_conversation_report
+from embeddings import generate_embedding, get_similar_messages
+from hybrid_search import search_health_services_hybrid, find_nearest_transit_stops
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -349,6 +352,158 @@ async def get_report(
     return {"report": conversation.report}
 
 
+class SimilaritySearchRequest(BaseModel):
+    query: str
+    limit: int = 5
+    threshold: float = 0.7
+
+
+@app.post("/conversation/{conversation_id}/search")
+async def search_similar_messages(
+    conversation_id: int,
+    request: SimilaritySearchRequest,
+    db: Session = Depends(get_db)
+):
+    """
+    Search for similar messages in a conversation using semantic similarity
+
+    Args:
+        conversation_id: ID of the conversation to search
+        query: Search query text
+        limit: Maximum number of results (default: 5)
+        threshold: Minimum similarity score 0-1 (default: 0.7)
+
+    Returns:
+        List of similar messages with their similarity scores
+    """
+    # Verify conversation exists
+    conversation = db.query(Conversation).filter(
+        Conversation.id == conversation_id
+    ).first()
+
+    if not conversation:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
+    # Generate embedding for search query
+    query_embedding = generate_embedding(request.query)
+
+    if not query_embedding:
+        raise HTTPException(status_code=500, detail="Failed to generate query embedding")
+
+    # Search for similar messages
+    similar_messages = get_similar_messages(
+        query_embedding=query_embedding,
+        conversation_id=conversation_id,
+        db=db,
+        limit=request.limit,
+        similarity_threshold=request.threshold
+    )
+
+    # Format results
+    results = [
+        {
+            "id": msg.id,
+            "role": msg.role,
+            "content": msg.content,
+            "timestamp": msg.timestamp.isoformat() if msg.timestamp else None,
+        }
+        for msg in similar_messages
+    ]
+
+    return {
+        "query": request.query,
+        "conversation_id": conversation_id,
+        "results": results,
+        "count": len(results)
+    }
+
+
+class HealthServiceSearchRequest(BaseModel):
+    latitude: float
+    longitude: float
+    query: Optional[str] = None
+    max_distance_km: float = 50.0
+    limit: int = 10
+    semantic_weight: float = 0.5
+
+
+@app.post("/search/health-services")
+async def search_health_services(
+    request: HealthServiceSearchRequest,
+    db: Session = Depends(get_db)
+):
+    """
+    Hybrid search for health services combining geospatial distance and semantic similarity
+
+    Args:
+        latitude: User's latitude
+        longitude: User's longitude
+        query: Optional search query (e.g., "mental health", "substance abuse")
+        max_distance_km: Maximum search radius in kilometers (default: 50)
+        limit: Maximum number of results (default: 10)
+        semantic_weight: Weight for semantic matching 0-1 (default: 0.5)
+
+    Returns:
+        List of health services with distances, transit stops, and map data
+    """
+
+    # Perform hybrid search
+    results = search_health_services_hybrid(
+        db=db,
+        user_lat=request.latitude,
+        user_lon=request.longitude,
+        query=request.query,
+        max_distance_km=request.max_distance_km,
+        limit=request.limit,
+        semantic_weight=request.semantic_weight
+    )
+
+    # For each result, find nearest transit stops
+    for service in results:
+        transit_stops = find_nearest_transit_stops(
+            db=db,
+            latitude=service['latitude'],
+            longitude=service['longitude'],
+            limit=3,
+            max_distance_km=1.0  # Within 1km of the service
+        )
+        service['nearby_transit'] = transit_stops
+
+    return {
+        "user_location": {
+            "latitude": request.latitude,
+            "longitude": request.longitude
+        },
+        "query": request.query,
+        "search_radius_km": request.max_distance_km,
+        "search_radius_miles": request.max_distance_km * 0.621371,
+        "results": results,
+        "count": len(results)
+    }
+
+
+def parse_location_from_message(message: str) -> Optional[dict]:
+    """
+    Parse location coordinates from a message.
+    Expected format: "My current location is: Latitude X, Longitude Y"
+
+    Returns:
+        Dict with 'latitude' and 'longitude' keys, or None if not found
+    """
+    # Pattern to match: "Latitude 34.052235, Longitude -118.243683"
+    pattern = r"Latitude\s+([-+]?\d+\.?\d*),\s*Longitude\s+([-+]?\d+\.?\d*)"
+    match = re.search(pattern, message, re.IGNORECASE)
+
+    if match:
+        try:
+            latitude = float(match.group(1))
+            longitude = float(match.group(2))
+            return {"latitude": latitude, "longitude": longitude}
+        except ValueError:
+            return None
+    return None
+
+
 @app.websocket("/ws/{conversation_id}")
 async def websocket_endpoint(
     websocket: WebSocket,
@@ -376,31 +531,62 @@ async def websocket_endpoint(
             user_message = data.get("content")
             is_voice = data.get("is_voice", False)
 
+            # Check if message contains location data
+            location_data = parse_location_from_message(user_message)
+            latitude = None
+            longitude = None
+
+            if location_data:
+                latitude = location_data["latitude"]
+                longitude = location_data["longitude"]
+                print(f"[Location] Detected coordinates: {latitude}, {longitude}")
+
+                # Update conversation with location
+                conversation.latitude = latitude
+                conversation.longitude = longitude
+                db.commit()
+
+            # Generate embedding for user message
+            user_embedding = generate_embedding(user_message)
+
             # Save user message
             db_message = Message(
                 conversation_id=conversation_id,
                 role="user",
                 content=user_message,
-                is_voice=is_voice
+                is_voice=is_voice,
+                latitude=latitude,
+                longitude=longitude,
+                embedding=user_embedding
             )
             db.add(db_message)
             db.commit()
+            print(f"[Embedding] Generated embedding for user message (dim: {len(user_embedding) if user_embedding else 0})")
 
-            # Add to history
-            message_history.append({"role": "user", "content": user_message})
+            # Add to history (include location if available)
+            message_dict = {"role": "user", "content": user_message}
+            if latitude is not None and longitude is not None:
+                message_dict["latitude"] = latitude
+                message_dict["longitude"] = longitude
+            message_history.append(message_dict)
 
-            # Get AI response
-            assistant_response = await get_chatbot_response(message_history)
+            # Get AI response (pass conversation object which now has location)
+            assistant_response = await get_chatbot_response(message_history, conversation)
+
+            # Generate embedding for assistant response
+            assistant_embedding = generate_embedding(assistant_response)
 
             # Save assistant message
             db_message = Message(
                 conversation_id=conversation_id,
                 role="assistant",
                 content=assistant_response,
-                is_voice=False
+                is_voice=False,
+                embedding=assistant_embedding
             )
             db.add(db_message)
             db.commit()
+            print(f"[Embedding] Generated embedding for assistant message (dim: {len(assistant_embedding) if assistant_embedding else 0})")
 
             # Add to history
             message_history.append({"role": "assistant", "content": assistant_response})
