@@ -1,9 +1,16 @@
+/* Prevent mobile bounce/overscroll */
+html, body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
 .chat-container {
   display: grid;
   grid-template-columns: 350px 1fr;
   height: 100vh;
   background: white;
   position: relative;
+  overscroll-behavior: none;
 }
 
 /* Voice Mode Full-Screen Layout */
@@ -12,12 +19,14 @@
 }
 
 .character-display {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: white;
   padding: 20px;
   min-height: 700px;
   display: flex;
   align-items: center;
   transition: all 0.3s ease;
+  touch-action: none; /* Prevent default touch gestures */
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
 /* Full-screen character in voice mode */
@@ -26,6 +35,10 @@
   height: 100vh;
   min-height: 100vh;
   padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .chat-interface {
@@ -65,7 +78,7 @@
 }
 
 .voice-mode-badge {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
 }
 
@@ -104,9 +117,9 @@
 
 .control-btn {
   padding: 10px 20px;
-  border: 2px solid #667eea;
+  border: 2px solid #3b82f6;
   background: white;
-  color: #667eea;
+  color: #3b82f6;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
@@ -115,12 +128,12 @@
 }
 
 .control-btn:hover {
-  background: #667eea;
+  background: #3b82f6;
   color: white;
 }
 
 .control-btn.active {
-  background: #667eea;
+  background: #3b82f6;
   color: white;
 }
 
@@ -162,7 +175,7 @@
 }
 
 .message.user .message-content {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
 }
 
@@ -179,7 +192,7 @@
 }
 
 .speaking-indicator {
-  color: #667eea;
+  color: #3b82f6;
   font-weight: bold;
   animation: pulse-text 1.5s infinite;
 }
@@ -242,12 +255,12 @@
 
 .message-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #3b82f6;
 }
 
 .send-btn {
   padding: 15px 30px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -259,25 +272,33 @@
 
 .send-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
 }
 
 .voice-btn {
   width: 100%;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  max-width: 500px;
+  padding: 20px 40px;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 50px;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.voice-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
 }
 
 .voice-btn.recording {
-  background: #ff6b6b;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
   animation: pulse 1.5s infinite;
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
 }
 
 @keyframes pulse {
@@ -327,6 +348,170 @@
   color: #333;
 }
 
+/* Enhanced markdown styling for reports */
+.markdown-report {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-height: 60vh;
+  overflow-y: auto;
+  white-space: normal;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.markdown-report > * {
+  white-space: normal;
+}
+
+.markdown-report pre,
+.markdown-report code {
+  font-family: 'Courier New', monospace;
+}
+
+.markdown-report > pre {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  white-space: normal;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.markdown-report > code {
+  background: transparent;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  color: inherit;
+}
+
+.markdown-report h1 {
+  font-size: 1.8em;
+  color: #2c3e50;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.markdown-report h2 {
+  font-size: 1.5em;
+  color: #34495e;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.markdown-report h3 {
+  font-size: 1.25em;
+  color: #34495e;
+  margin-top: 16px;
+  margin-bottom: 10px;
+}
+
+.markdown-report p {
+  margin: 10px 0;
+  line-height: 1.7;
+}
+
+.markdown-report ul,
+.markdown-report ol {
+  margin: 12px 0;
+  padding-left: 25px;
+}
+
+.markdown-report li {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+.markdown-report strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.markdown-report em {
+  color: #555;
+}
+
+.markdown-report code {
+  background: #f5f5f5;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  color: #e74c3c;
+}
+
+.markdown-report pre {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 15px 0;
+}
+
+.markdown-report pre code {
+  background: none;
+  padding: 0;
+  color: #333;
+}
+
+.markdown-report blockquote {
+  border-left: 4px solid #3b82f6;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f8f9fa;
+  color: #555;
+  font-style: italic;
+}
+
+.markdown-report table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+
+.markdown-report th,
+.markdown-report td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.markdown-report th {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+}
+
+.markdown-report tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.markdown-report a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.markdown-report a:hover {
+  text-decoration: underline;
+}
+
+/* Report modal specific styling */
+.report-modal {
+  max-width: 900px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.report-modal h2 {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #3b82f6;
+}
+
 .modal-actions {
   display: flex;
   gap: 10px;
@@ -344,15 +529,15 @@
 }
 
 .modal-actions .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
   border: none;
 }
 
 .modal-actions .btn-secondary {
   background: white;
-  color: #667eea;
-  border: 2px solid #667eea;
+  color: #3b82f6;
+  border: 2px solid #3b82f6;
 }
 
 /* Voice Settings Modal */
@@ -386,7 +571,7 @@
 
 .settings-select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #3b82f6;
 }
 
 .settings-slider {
@@ -405,7 +590,7 @@
   appearance: none;
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s;
@@ -418,7 +603,7 @@
 .settings-slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   border-radius: 50%;
   cursor: pointer;
   border: none;
@@ -448,25 +633,31 @@
   gap: 15px;
   align-items: center;
   z-index: 100;
+  width: 90%;
+  max-width: 500px;
 }
 
 .exit-voice-btn {
+  width: 100%;
+  max-width: 500px;
   padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(59, 130, 246, 0.9);
   backdrop-filter: blur(10px);
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 25px;
+  border: 2px solid rgba(59, 130, 246, 1);
+  border-radius: 50px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
   transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .exit-voice-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: scale(1.05);
+  background: rgba(59, 130, 246, 1);
+  border-color: rgba(37, 99, 235, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
 }
 
 @media (max-width: 768px) {
@@ -474,8 +665,34 @@
     grid-template-columns: 1fr;
   }
 
-  .character-display {
+  /* Hide character in text mode on mobile, but show in voice mode */
+  .chat-container:not(.voice-mode-layout) .character-display {
     display: none;
+  }
+
+  /* Ensure character is visible in voice mode on mobile */
+  .chat-container.voice-mode-layout .character-display {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* Use dynamic viewport height */
+    min-height: 100vh;
+    min-height: 100dvh; /* Use dynamic viewport height */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  /* Ensure voice controls are above character */
+  .voice-mode-controls {
+    z-index: 100;
+    position: fixed;
+    width: 90%;
+    max-width: 400px;
+    bottom: max(40px, env(safe-area-inset-bottom, 20px)); /* Account for notch/home bar */
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 
   .chat-header {
@@ -505,5 +722,110 @@
 
   .voice-settings-modal {
     max-width: 95%;
+  }
+
+  /* Make voice buttons full width on mobile */
+  .voice-btn,
+  .exit-voice-btn {
+    max-width: 100%;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  /* Optimize button sizes for touch */
+  .voice-btn {
+    padding: 18px 40px;
+    min-height: 56px; /* Minimum touch target size */
+  }
+
+  .exit-voice-btn {
+    padding: 14px 28px;
+    min-height: 48px; /* Minimum touch target size */
+  }
+}
+
+/* Landscape mode on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .voice-mode-controls {
+    bottom: max(20px, env(safe-area-inset-bottom, 10px));
+    gap: 10px;
+  }
+
+  .voice-btn {
+    padding: 14px 32px;
+    font-size: 15px;
+  }
+
+  .exit-voice-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}
+
+/* Support for devices with notches/safe areas */
+@supports (padding: max(0px)) {
+  .chat-container.voice-mode-layout {
+    padding-left: env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
+    padding-top: env(safe-area-inset-top, 0);
+  }
+}
+
+/* Small mobile devices (iPhone SE, small Android phones) */
+@media (max-width: 375px) {
+  .voice-mode-controls {
+    width: 92%;
+    bottom: max(30px, env(safe-area-inset-bottom, 15px));
+    gap: 12px;
+  }
+
+  .voice-btn {
+    padding: 16px 32px;
+    font-size: 15px;
+  }
+
+  .exit-voice-btn {
+    padding: 12px 24px;
+    font-size: 13px;
+  }
+
+  .login-card {
+    padding: 30px 20px;
+  }
+}
+
+/* Large mobile devices and tablets in portrait */
+@media (min-width: 481px) and (max-width: 768px) {
+  .voice-mode-controls {
+    max-width: 500px;
+  }
+
+  .voice-btn {
+    padding: 20px 50px;
+    font-size: 18px;
+  }
+
+  .exit-voice-btn {
+    padding: 15px 30px;
+    font-size: 15px;
+  }
+}
+
+/* Optimize for very short screens (landscape on small phones) */
+@media (max-height: 500px) {
+  .voice-mode-controls {
+    bottom: max(15px, env(safe-area-inset-bottom, 10px));
+    gap: 8px;
+  }
+
+  .voice-btn {
+    padding: 12px 28px;
+    font-size: 14px;
+    min-height: 44px;
+  }
+
+  .exit-voice-btn {
+    padding: 8px 18px;
+    font-size: 12px;
+    min-height: 40px;
   }
 }

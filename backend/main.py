@@ -23,11 +23,16 @@ from auth import (
 from chatbot import get_chatbot_response, generate_conversation_report
 from embeddings import generate_embedding, get_similar_messages
 from hybrid_search import search_health_services_hybrid, find_nearest_transit_stops
+from health_api import router as health_router
+import health_models  # Import health models to ensure they're created
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Homeless Assistant API")
+
+# Include health management routes
+app.include_router(health_router)
 
 # CORS middleware
 app.add_middleware(
@@ -321,8 +326,8 @@ async def end_conversation(
     messages = db.query(Message).filter(Message.conversation_id == conversation_id).all()
     message_list = [{"role": msg.role, "content": msg.content} for msg in messages]
 
-    # Generate report
-    report = await generate_conversation_report(message_list)
+    # Generate report with health data (for guest mode, use conversation_id as user_id)
+    report = await generate_conversation_report(message_list, conversation_id=conversation_id, db=db)
 
     conversation.ended_at = datetime.utcnow()
     conversation.report = report

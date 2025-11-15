@@ -29,6 +29,14 @@
   font-size: 0.95rem;
 }
 
+.auth-prompt {
+  text-align: center;
+  color: #3b82f6;
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .login-card form {
   display: flex;
   flex-direction: column;
@@ -45,11 +53,11 @@
 
 .login-card input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #3b82f6;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
   padding: 15px;
   border: none;
@@ -62,7 +70,7 @@
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
 }
 
 .btn-primary:disabled {
@@ -72,9 +80,9 @@
 
 .btn-secondary {
   background: white;
-  color: #667eea;
+  color: #3b82f6;
   padding: 15px;
-  border: 2px solid #667eea;
+  border: 2px solid #3b82f6;
   border-radius: 10px;
   font-size: 16px;
   font-weight: 600;
@@ -83,7 +91,7 @@
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #667eea;
+  background: #3b82f6;
   color: white;
 }
 
@@ -95,7 +103,7 @@
 .btn-link {
   background: none;
   border: none;
-  color: #667eea;
+  color: #3b82f6;
   cursor: pointer;
   padding: 10px;
   font-size: 14px;

@@ -1,15 +1,16 @@
 """
-Search tool for finding resources online
+Search tool for finding resources online and in local datasets
 """
 
 from vertexai.generative_models import FunctionDeclaration
 import requests
 from typing import List, Dict, Optional
+from .dataset_search import search_local_datasets, format_results_for_llm
 
-# Define DuckDuckGo search function
+# Define search function (searches local datasets first, then web)
 search_web_func = FunctionDeclaration(
     name="search_web",
-    description="Search the web using DuckDuckGo to find resources like shelters, food banks, healthcare services, and other assistance programs. Use this when you need to find real, current information about resources. If the user's location is known, it will automatically be included in the search context.",
+    description="Search for resources like shelters, food banks, healthcare services, and other assistance programs. This function FIRST searches our local verified database of resources, then falls back to web search if needed. Use this when you need to find real, current information about resources. If the user's location is known, results will be sorted by distance.",
     parameters={
         "type": "object",
         "properties": {
@@ -78,7 +79,7 @@ def get_location_name(latitude: float, longitude: float) -> Optional[str]:
 
 def perform_web_search(query: str, max_results: int = 5, latitude: Optional[float] = None, longitude: Optional[float] = None) -> List[Dict[str, str]]:
     """
-    Perform a web search using DuckDuckGo Instant Answer API
+    Search for resources - first checks local datasets, then falls back to web search
 
     Args:
         query: Search query string
@@ -90,6 +91,30 @@ def perform_web_search(query: str, max_results: int = 5, latitude: Optional[floa
         List of search results with title, snippet, and URL
     """
     try:
+        # FIRST: Try to find results in local datasets
+        print(f"[Search] Searching local datasets for: {query}")
+        local_results = search_local_datasets(query, latitude, longitude, max_results)
+
+        if local_results:
+            # Format local results for the LLM
+            formatted_text = format_results_for_llm(local_results)
+            print(f"[Search] Found {len(local_results)} results in local datasets")
+
+            # Also include structured data for the frontend map
+            import json
+            structured_data = json.dumps({
+                'type': 'resource_list',
+                'resources': local_results
+            })
+
+            return [{
+                'title': 'Local Resources Database',
+                'snippet': formatted_text + f"\n\n<!-- RESOURCE_DATA:{structured_data} -->",
+                'url': 'local://database'
+            }]
+
+        # If no local results, fall back to web search
+        print("[Search] No local results found, falling back to web search")
         # If location is provided, enhance the query with location
         enhanced_query = query
         if latitude is not None and longitude is not None:

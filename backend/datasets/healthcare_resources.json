@@ -1,0 +1,1226 @@
+[
+  {
+    "id": 1,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Medication Evaluation & Management"
+    ],
+    "address": "6010 Hidden Valley Rd Ste 200, Carlsbad, CA 92011",
+    "phone": "(760)631-3000",
+    "hours": "Call for hours",
+    "requirements": "Transitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 33.12278,
+      "longitude": -117.3058
+    },
+    "website": null,
+    "region": "North Coastal",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 2,
+    "name": "VH ADAPT MHSA",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "ADAPT provides in-home holistic mental health treatment to individuals and family members who screen positive for postportum anxiety and/or depression.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Medication Support Services"
+    ],
+    "address": "6070 MISSION GORGE RD, SAN DIEGO, CA 92120",
+    "phone": "6193334250",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.78435,
+      "longitude": -117.0978
+    },
+    "website": "vistahill.org",
+    "region": "Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 3,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Inpatient Treatment",
+      "Medication Evaluation & Management"
+    ],
+    "address": "610 Euclid Ave STE 200, National City, CA 91950",
+    "phone": "(866)284-2771",
+    "hours": "Call for hours",
+    "requirements": "Adults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.68424,
+      "longitude": -117.083
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 4,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Critical Incident Stress Debriefing",
+      "Medication Evaluation & Management",
+      "Outpatient Treatment"
+    ],
+    "address": "610 Euclid Ave STE 200, National City, CA 91950",
+    "phone": "(866)284-2774",
+    "hours": "Call for hours",
+    "requirements": "Transitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.68424,
+      "longitude": -117.083
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 5,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Medication Evaluation & Management",
+      "Outpatient Treatment"
+    ],
+    "address": "610 Euclid Ave Ste 200, National City, CA 91950",
+    "phone": "(619)267-9257",
+    "hours": "Call for hours",
+    "requirements": "Transitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.68424,
+      "longitude": -117.083
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 6,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Home Visits",
+      "Individual Therapy",
+      "Inpatient Treatment",
+      "Medication Evaluation & Management",
+      "Neuropsych. Testing",
+      "Outpatient Treatment",
+      "Psychological Testing"
+    ],
+    "address": "610 Euclid Ave, National City, CA 91950",
+    "phone": "(619)267-9257",
+    "hours": "Call for hours",
+    "requirements": "Adolescents 13-17\nTransitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.68424,
+      "longitude": -117.083
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 7,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Critical Incident Stress Debriefing",
+      "Family Therapy",
+      "Individual Therapy"
+    ],
+    "address": "6136 Mission Gorge Rd Ste 106, San Diego, CA 92120",
+    "phone": "(619)786-1351",
+    "hours": "Call for hours",
+    "requirements": "Adults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.78607,
+      "longitude": -117.0978
+    },
+    "website": null,
+    "region": "North Central",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 8,
+    "name": "CRF MAST FAMILY THERAPY FSP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental Health assessment and treatment services for students  and their  families at the Momentum Learning School sites, home,  and office/clinic location.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Intensive Home-Based Services,",
+      "Medication Support Services"
+    ],
+    "address": "6145 Imperial Ave, San Diego, CA 92114",
+    "phone": "6193983261",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18),\nTransition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.70948,
+      "longitude": -117.0659
+    },
+    "website": "http://www.comresearch.org",
+    "region": "Countywide",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 9,
+    "name": "CRF MAST MHSA FSP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental Health assessment and treatment services for students  and their  families at the Momentum Learning School sites, home,  and office/clinic location.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Intensive Home-Based Services,",
+      "Medication Support Services"
+    ],
+    "address": "6145 Imperial Ave, San Diego, CA 92114",
+    "phone": "619-398-3261",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18),\nTransition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.70948,
+      "longitude": -117.0659
+    },
+    "website": "http://www.crfbehavioralhealthcare.org",
+    "region": "Countywide",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 10,
+    "name": "Second Chance Drug Court Central IOS",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Intensive Outpatient Treatment"
+    ],
+    "address": "6145 Imperial Ave, San Diego, CA 92114",
+    "phone": "6192348888",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.70948,
+      "longitude": -117.0659
+    },
+    "website": "www.secondchanceprogram.org",
+    "region": "Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 11,
+    "name": "Second Chance Drug Court Central OS",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Outpatient Treatment"
+    ],
+    "address": "6145 Imperial Ave, San Diego, CA 92114",
+    "phone": "6192348888",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.70948,
+      "longitude": -117.0659
+    },
+    "website": "www.secondchanceprogram.org",
+    "region": "Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 12,
+    "name": "Second Chance ReEntry Court Prog IOS",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Intensive Outpatient Treatment"
+    ],
+    "address": "6145 Imperial Ave, San Diego, CA 92114",
+    "phone": "6192348888",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.70948,
+      "longitude": -117.0659
+    },
+    "website": "www.secondchanceprogram.org",
+    "region": "Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 13,
+    "name": "Second Chance ReEntry Court Prog OS",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Outpatient Treatment"
+    ],
+    "address": "6145 Impreial Ave, San Diego, CA 92114",
+    "phone": "6192348888",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.70948,
+      "longitude": -117.0659
+    },
+    "website": "www.secondchanceprogram.org",
+    "region": "Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 14,
+    "name": "PWS KICKSTART",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Provide Prevention and Early Intervention (PEI) services for persons age 10-25 who have emerging ‘prodromal’ symptoms of psychosis.  This program has three service components including:1) Prevention, through public education;2) Early Intervention, through screening potentially at risk youth; and3) Intensive Treatment, with treatment of youth who are identified as at risk and their families.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Medication Support Services"
+    ],
+    "address": "6160 MISSION GORGE RD STE 100, SAN DIEGO, CA 92120",
+    "phone": "6194813790",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.78681,
+      "longitude": -117.0978
+    },
+    "website": "www.kickstartsd.org",
+    "region": "Countywide",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 15,
+    "name": "TELECARE AGEWISE",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Our ACT teams provide intensive, community-based mental health, behavioral health, and social services for individuals with mental illness, substance use, unemployment, homelessness, or other major life challenges. Our teams include trained peer support specialists, case managers, and clinicians.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Medication Support Services"
+    ],
+    "address": "6160 MISSION GORGE RD STE 108, SAN DIEGO, CA 92120",
+    "phone": "6196833100",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.78681,
+      "longitude": -117.0978
+    },
+    "website": "www.telecarecorp.com",
+    "region": "Countywide",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 16,
+    "name": "TELECARE AGEWISE ICM",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Institutional case management serves members who are conserved and placed in a long-term care facility. The program provides members with support in obtaining and maintaining benefits, care coordination, discharge planning, and advocacy. Members are assessed to ensure that they are placed in the least restrictive environment possible.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination"
+    ],
+    "address": "6160 MISSION GORGE RD, STE 108, SAN DIEGO, CA 92120",
+    "phone": "6194815200",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.78681,
+      "longitude": -117.0978
+    },
+    "website": "telecarecorp.com",
+    "region": "Countywide",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 17,
+    "name": "SDUSD CITY SCHOOLS OP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Outpatient therapy, Individual –Group and Family therapy, Case management, Family partners, Pathways to Well-Being- intensive care coordination, School based therapy, Medication services",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Medication Support Services"
+    ],
+    "address": "6196 Childs Ave, San Diego, CA 92139",
+    "phone": "8585732227",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18),\nAdolescent (12-17),\nTransition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.67034,
+      "longitude": -117.0567
+    },
+    "website": "www.sandiegounified.org",
+    "region": "Central, North Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 18,
+    "name": "SDUSD CITY SCHOOLS OP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Outpatient therapy, Individual –Group and Family therapy, Case management, Family partners, Pathways to Well-Being- intensive care coordination, School based therapy, Medication services",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Medication Support Services"
+    ],
+    "address": "620 Briarwood Rd, San Diego, CA 92139",
+    "phone": "8585732227",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18),\nAdolescent (12-17),\nTransition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.68876,
+      "longitude": -117.0375
+    },
+    "website": "www.sandiegounified.org",
+    "region": "Central, North Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 19,
+    "name": "CRF NUEVA VISTA MHSA FSP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Nueva Vista Family Services is located in Chula Vista and serves children, youth and families residing in the South region.  The program provides a full range of services in Spanish and English to children and youth identified as having Serious Emotional Disturbance (SED). Services are family-driven, and all family members actively participate in service planning and delivery.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Intensive Home-Based Services,",
+      "Medication Support Services"
+    ],
+    "address": "621 E 18th St, National City, CA 91950",
+    "phone": "1619585768",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18)",
+    "coordinates": {
+      "latitude": 32.66902,
+      "longitude": -117.0973
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 20,
+    "name": "PWS CORNERSTONE",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Pathways Community Services-Cornerstone is a Full Service Partnership(FSP) program that provides school-based & outpatient behavioral health services for MediCal-eligible & unfunded children & adolescents.Cornerstone is located in the College Area of San Diego, in the Campus Medical, Dental & Professional Center on El Cajon Blvd.Currently partnered with 14 area schools within the San Diego & provides services at these school sites in addition to home & clinic based services",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Intensive Home-Based Services,",
+      "Medication Support Services"
+    ],
+    "address": "6244 EL CAJON BLVD STE 14, SAN DIEGO, CA 92115",
+    "phone": "6196403266",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.76344,
+      "longitude": -117.0638
+    },
+    "website": null,
+    "region": "Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 21,
+    "name": "TURN ACTION CENTRAL FSP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Assertive Community Treatment Intensive Outreach Needs (ACTION) – Central program offers a dual track treatment model for individuals in the central San Diego area who have either been diagnosed with a severe and persistent mental illness or a chronic substance use disorder. We offer medication management and monitoring, individual therapy, outpatient substance abuse treatment, case management, employment support, peer counseling and support, and housing services. ACTION Central provides a safe environment in which our clients can address all of their treatment needs.`",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Medication Support Services"
+    ],
+    "address": "6244 EL CAJON BLVD STE 15, SAN DIEGO, CA 92115",
+    "phone": "6192878225",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.76344,
+      "longitude": -117.0638
+    },
+    "website": null,
+    "region": "Countywide",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 22,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Family Therapy",
+      "Group Therapy",
+      "Home Visits",
+      "Individual Therapy",
+      "Outpatient Treatment"
+    ],
+    "address": "6244 El Cajon Blvd Ste 3, San Diego, CA 92115",
+    "phone": "(619)838-9460",
+    "hours": "Call for hours",
+    "requirements": "Adults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.76344,
+      "longitude": -117.0638
+    },
+    "website": null,
+    "region": "Central",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 23,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Family Therapy",
+      "Group Therapy",
+      "Individual Therapy",
+      "Outpatient Treatment"
+    ],
+    "address": "6244 El Cajon Blvd Ste 3, San Diego, CA 92115",
+    "phone": "(619)787-7027",
+    "hours": "Call for hours",
+    "requirements": "Transitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.76344,
+      "longitude": -117.0638
+    },
+    "website": null,
+    "region": "Central",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 24,
+    "name": "TURN Action Central IOS",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Expanding Horizons is San Diego County’s first Outpatient, non-residential Substance Use Disorder treatment program specifically for Transition Age Youth (TAY) aged 18-29. Our program provides care that is client- and family-centered, individualized, clinically effective, outcomes-driven, culturally responsive, gender specific, trauma informed, developmentally and age-appropriate, and inclusive of TAY evidence-based treatment practice and recovery services approaches.",
+    "services": [
+      "Intensive Outpatient Treatment"
+    ],
+    "address": "6244 El Cajon Blvd, San Diego, CA 92115",
+    "phone": "6192878225",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.76344,
+      "longitude": -117.0638
+    },
+    "website": "https://www.turnbhs.org",
+    "region": "Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 25,
+    "name": "TURN Action Central OS",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Apex Recovery is a California State licensed, San Diego rehab that provides drug and alcohol treatment programs including dual diagnosis. Apex Rehab Recovery is one of very few rehab centers in San Diego that offers accredited care for five levels of substance abuse treatment programs. Apex Recovery is a San Diego leader in drug addiction and alcohol addiction rehabilitation, offering detox programs and outpatient programs, which include both Intensive Outpatient Programs, as well as Partial Hospitalization Programs.",
+    "services": [
+      "Outpatient Treatment"
+    ],
+    "address": "6244 El Cajon Blvd, San Diego, CA 92115",
+    "phone": "6192878225",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.76344,
+      "longitude": -117.0638
+    },
+    "website": "https://www.turnbhs.org",
+    "region": "Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 26,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Medication Evaluation & Management"
+    ],
+    "address": "625 Citracado Pkwy Ste 102, Escondido, CA 92025",
+    "phone": "(760)294-9270",
+    "hours": "Call for hours",
+    "requirements": "Infants 0-3\nPreschool 3-5\nChildren 6-12\nAdolescents 13-17\nTransitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 33.09177,
+      "longitude": -117.079
+    },
+    "website": null,
+    "region": "North Inland",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 27,
+    "name": "NA INCREDIBLE FAM CENTRAL MHSA",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Behavioral health outpatient services and other developmental appropriate clinical interventions to children and their families that are Dependents of the Juvenile Courts hence involved with Child Welfare Services (CWS).",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Intensive Home-Based Services,",
+      "Medication Support Services"
+    ],
+    "address": "625 E street, Ramona, CA 92065",
+    "phone": "619-207-0396",
+    "hours": "Call for hours",
+    "requirements": "Children",
+    "coordinates": {
+      "latitude": 33.04357,
+      "longitude": -116.8613
+    },
+    "website": null,
+    "region": "North",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 28,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Critical Incident Stress Debriefing",
+      "Family Therapy",
+      "Individual Therapy",
+      "Outpatient Treatment"
+    ],
+    "address": "625 Third Ave, Chula Vista, CA 91910",
+    "phone": "(619)880-3557",
+    "hours": "Call for hours",
+    "requirements": "Adults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.62997,
+      "longitude": -117.0754
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 29,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Family Therapy",
+      "Group Therapy",
+      "Individual Therapy",
+      "Outpatient Treatment"
+    ],
+    "address": "629 3rd Ave STE B, Chula Vista, CA 91910",
+    "phone": "(619)305-9393",
+    "hours": "Call for hours",
+    "requirements": "Transitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.62973,
+      "longitude": -117.0754
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 30,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Critical Incident Stress Debriefing",
+      "Family Therapy",
+      "Group Therapy",
+      "Individual Therapy",
+      "Inpatient Treatment"
+    ],
+    "address": "629 Third Ave STE B, Chula Vista, CA 91910",
+    "phone": "(619)305-9393",
+    "hours": "Call for hours",
+    "requirements": "Transitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.62973,
+      "longitude": -117.0754
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 31,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Critical Incident Stress Debriefing",
+      "Family Therapy",
+      "Group Therapy",
+      "Individual Therapy",
+      "Outpatient Treatment"
+    ],
+    "address": "629 Third Ave STE B, Chula Vista, CA 91910",
+    "phone": "(619)952-5601",
+    "hours": "Call for hours",
+    "requirements": "Preschool 3-5\nChildren 6-12\nAdolescents 13-17\nTransitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.62973,
+      "longitude": -117.0754
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 32,
+    "name": "CRF MAST MHSA FSP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental Health assessment and treatment services for students  and their  families at the Momentum Learning School sites, home,  and office/clinic location.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Intensive Home-Based Services,",
+      "Medication Support Services"
+    ],
+    "address": "6290 Oriskany Rd, San Diego, CA 92139",
+    "phone": "619-398-3261",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18),\nTransition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.68652,
+      "longitude": -117.059
+    },
+    "website": "http://www.crfbehavioralhealthcare.org",
+    "region": "Countywide",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 33,
+    "name": "CRF MAST MHSA FSP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental Health assessment and treatment services for students  and their  families at the Momentum Learning School sites, home,  and office/clinic location.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Intensive Home-Based Services,",
+      "Medication Support Services"
+    ],
+    "address": "6290 Oriskany Rd, San Diego, CA 92139",
+    "phone": "619-398-3261",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18),\nTransition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.68514,
+      "longitude": -117.0586
+    },
+    "website": "http://www.crfbehavioralhealthcare.org",
+    "region": "Countywide",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 34,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Home Visits",
+      "Inpatient Treatment",
+      "Medication Evaluation & Management"
+    ],
+    "address": "631 Taft Ave, El Cajon, CA 92020",
+    "phone": "(619)784-1837",
+    "hours": "Call for hours",
+    "requirements": "Transitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.78887,
+      "longitude": -116.9564
+    },
+    "website": null,
+    "region": "East",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 35,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Individual Therapy",
+      "Outpatient Treatment",
+      "Psychological Testing"
+    ],
+    "address": "6386 Alvarado Court Suite 310, San Diego, CA 92120",
+    "phone": "(619)668-6200",
+    "hours": "Call for hours",
+    "requirements": "Preschool 3-5\nChildren 6-12\nAdolescents 13-17\nTransitional Youth 18-22",
+    "coordinates": {
+      "latitude": 32.77664,
+      "longitude": -117.0614
+    },
+    "website": null,
+    "region": "North Central",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 36,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Family Therapy",
+      "Group Therapy",
+      "Neuropsych. Testing",
+      "Outpatient Treatment",
+      "Psychological Testing"
+    ],
+    "address": "6386 Alvarado Ct STE 310, San Diego, CA 92120",
+    "phone": "(619)668-6200",
+    "hours": "Call for hours",
+    "requirements": "Children 6-12\nAdolescents 13-17\nTransitional Youth 18-22\nAdults 23-59",
+    "coordinates": {
+      "latitude": 32.77664,
+      "longitude": -117.0614
+    },
+    "website": null,
+    "region": "North Central",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 37,
+    "name": "SDCC EAST OP LA MESA",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Outpatient specialty mental health services, individual/group/family therapy, rehabilitation, crisis intervention, case management and enhanced services.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Medication Support Services"
+    ],
+    "address": "6386 ALVARADO CT STE 310, SAN DIEGO, CA 92120",
+    "phone": "6196686200",
+    "hours": "Call for hours",
+    "requirements": "Varies by program",
+    "coordinates": {
+      "latitude": 32.77664,
+      "longitude": -117.0614
+    },
+    "website": "centerforchildren.org",
+    "region": "East",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 38,
+    "name": "SDCC EAST OP LA MESA FSP MHSA",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Outpatient specialty mental health services, individual/group/family therapy, rehabilitation, crisis intervention, case management and enhanced services.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Medication Support Services"
+    ],
+    "address": "6386 Alvarado Ct. Suite 310, San Diego, CA 92120",
+    "phone": "6196686200",
+    "hours": "Call for hours",
+    "requirements": "Children (6-18),\nTransition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.77664,
+      "longitude": -117.0614
+    },
+    "website": "centerforchildren.org",
+    "region": "East",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 39,
+    "name": "UPAC CMH FSP MHSA",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Program consists of three components: 1) provides prevention and early intervention services to children at risk due to gang violence and to their families, 2) provides community response team services, and 3) provides mental health counseling services.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Home-Based Services,",
+      "Medication Support Services"
+    ],
+    "address": "6402 Linda Vista Rd, San Diego, CA 92111",
+    "phone": "619-232-6454",
+    "hours": "Call for hours",
+    "requirements": "Transition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.77198,
+      "longitude": -117.1804
+    },
+    "website": "https://www.upacsd.com",
+    "region": "Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 40,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Medication Evaluation & Management",
+      "Outpatient Treatment"
+    ],
+    "address": "6496 Weathers Pl St, San Diego, CA 92121",
+    "phone": "(858)210-6026",
+    "hours": "Call for hours",
+    "requirements": "Transitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.9054,
+      "longitude": -117.1788
+    },
+    "website": null,
+    "region": "North Central",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 41,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "ECT (MD Only Including Consult)",
+      "Inpatient Treatment",
+      "Medication Evaluation & Management",
+      "Outpatient Treatment"
+    ],
+    "address": "6496 Weathers Pl Ste 100, San Diego, CA 92121",
+    "phone": "(858)925-6137",
+    "hours": "Call for hours",
+    "requirements": "Adolescents 13-17\nTransitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.9054,
+      "longitude": -117.1788
+    },
+    "website": null,
+    "region": "North Central",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 42,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Critical Incident Stress Debriefing",
+      "Medication Evaluation & Management",
+      "Outpatient Treatment"
+    ],
+    "address": "6496 Weathers Place STE 100, San Diego, CA 92121",
+    "phone": "(561)371-6754",
+    "hours": "Call for hours",
+    "requirements": "Adolescents 13-17\nTransitional Youth 18-22\nAdults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.9054,
+      "longitude": -117.1788
+    },
+    "website": null,
+    "region": "North Central",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 43,
+    "name": "TELECARE OLDER ADULT SBCM MHSA",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Our ACT teams provide intensive, community-based mental health, behavioral health, and social services for individuals with mental illness, substance use, unemployment, homelessness, or other major life challenges. Our teams include trained peer support specialists, case managers, and clinicians.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Medication Support Services"
+    ],
+    "address": "655 S.MOLLISON, EL CAJON, CA 92020",
+    "phone": "6194815200",
+    "hours": "Call for hours",
+    "requirements": "Older Adult (60+)",
+    "coordinates": {
+      "latitude": 32.78833,
+      "longitude": -116.9509
+    },
+    "website": null,
+    "region": "Countywide",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 44,
+    "name": "SDUSD CITY SCHOOLS OP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Outpatient therapy, Individual –Group and Family therapy, Case management, Family partners, Pathways to Well-Being- intensive care coordination, School based therapy, Medication services",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Medication Support Services"
+    ],
+    "address": "6620 Marlowe Dr, San Diego, CA 92115",
+    "phone": "8585732227",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18),\nAdolescent (12-17),\nTransition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.74779,
+      "longitude": -117.0545
+    },
+    "website": "www.sandiegounified.org",
+    "region": "Central, North Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 45,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Family Therapy",
+      "Individual Therapy",
+      "Inpatient Treatment",
+      "Outpatient Treatment"
+    ],
+    "address": "6645 Alvarado Rd # 255, San Diego, CA 92120",
+    "phone": "(619)265-8383",
+    "hours": "Call for hours",
+    "requirements": "Adults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.77729,
+      "longitude": -117.0576
+    },
+    "website": null,
+    "region": "North Central",
+    "taking_new_referrals": "Unknown"
+  },
+  {
+    "id": 46,
+    "name": "CRF NUEVA VISTA MHSA FSP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Nueva Vista Family Services is located in Chula Vista and serves children, youth and families residing in the South region.  The program provides a full range of services in Spanish and English to children and youth identified as having Serious Emotional Disturbance (SED). Services are family-driven, and all family members actively participate in service planning and delivery.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Intensive Home-Based Services,",
+      "Medication Support Services"
+    ],
+    "address": "670 Flower St, Chula Vista, CA 91910",
+    "phone": "1619585768",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18)",
+    "coordinates": {
+      "latitude": 32.64225,
+      "longitude": -117.0969
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 47,
+    "name": "SDUSD CITY SCHOOLS OP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Outpatient therapy, Individual –Group and Family therapy, Case management, Family partners, Pathways to Well-Being- intensive care coordination, School based therapy, Medication services",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Medication Support Services"
+    ],
+    "address": "6702 Wandermere Dr, San Diego, CA 92120",
+    "phone": "8585732227",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18),\nAdolescent (12-17),\nTransition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.79637,
+      "longitude": -117.051
+    },
+    "website": "www.sandiegounified.org",
+    "region": "Central, North Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 48,
+    "name": "CRF MAST MHSA FSP",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental Health assessment and treatment services for students  and their  families at the Momentum Learning School sites, home,  and office/clinic location.",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Intensive Home-Based Services,",
+      "Medication Support Services"
+    ],
+    "address": "6785 Imperial Ave, San Diego, CA 92114",
+    "phone": "619-398-3261",
+    "hours": "Call for hours",
+    "requirements": "Young Children (0-5),\nChildren (6-18),\nTransition Age Youth (16-25)",
+    "coordinates": {
+      "latitude": 32.71124,
+      "longitude": -117.0515
+    },
+    "website": "http://www.crfbehavioralhealthcare.org",
+    "region": "Countywide",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 49,
+    "name": "NCL CCC CENTRAL FSP MHSA",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Connections Community Counseling is a mental health program for youth, up to age 21, who are homeless, runaway, or residing in inadequate or non-permanent living situations (couch surfing, transitional housing, multifamily living, threatened placement, etc.).",
+    "services": [
+      "Day Rehabilitation,",
+      "Targeted Case Management,",
+      "Crisis Intervention,",
+      "Mental Health Services,",
+      "Intensive Care Coordination,",
+      "Medication Support Services"
+    ],
+    "address": "6785 Imperial Ave, San Diego, CA 92114",
+    "phone": "760-842-6202",
+    "hours": "Call for hours",
+    "requirements": "All Ages",
+    "coordinates": {
+      "latitude": 32.71124,
+      "longitude": -117.0515
+    },
+    "website": "nclifeline.org",
+    "region": "Central",
+    "taking_new_referrals": "Yes"
+  },
+  {
+    "id": 50,
+    "name": "Fee-For-Service",
+    "type": "healthcare",
+    "category": "behavioral health",
+    "description": "Mental health and behavioral health services",
+    "services": [
+      "Family Therapy",
+      "Group Therapy",
+      "Individual Therapy",
+      "Outpatient Treatment"
+    ],
+    "address": "681 Third Ave, Chula Vista, CA 91910",
+    "phone": "(619)525-7747",
+    "hours": "Call for hours",
+    "requirements": "Adults 23-59\nOlder Adults 60+",
+    "coordinates": {
+      "latitude": 32.62844,
+      "longitude": -117.0748
+    },
+    "website": null,
+    "region": "South",
+    "taking_new_referrals": "Unknown"
+  }
+]
